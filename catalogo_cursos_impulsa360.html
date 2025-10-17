@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Cursos - Impulsa360</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .cursos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+        .curso-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+        .curso-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        .curso-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        /* ESTILOS PARA LA IMAGEN DEL CURSO */
+        .curso-imagen-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .curso-imagen {
+            width: 100%;
+            max-width: 250px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid #e9ecef;
+        }
+        .curso-imagen-placeholder {
+            width: 100%;
+            max-width: 250px;
+            height: 180px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1em;
+            margin: 0 auto;
+            border: 2px dashed #dee2e6;
+        }
+        .curso-nombre {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        .curso-info {
+            margin-bottom: 12px;
+            font-size: 0.95em;
+        }
+        .curso-categoria {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .curso-duracion { color: #7e57c2; font-weight: bold; }
+        .curso-cupos { color: #43a047; font-weight: bold; }
+        .curso-fechas { color: #f57c00; font-weight: bold; }
+        .curso-descripcion {
+            color: #5a6c7d;
+            font-style: italic;
+            line-height: 1.5;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .curso-requisitos {
+            color: #6d4c41;
+            font-size: 0.9em;
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff3e0;
+            border-radius: 6px;
+        }
+        .estado-activo {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        /* Botón de Google Form */
+        .boton-inscripcion {
+            display: block;
+            background: linear-gradient(135deg, #34A853, #0F9D58);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(52, 168, 83, 0.3);
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .boton-inscripcion:hover {
+            background: linear-gradient(135deg, #0F9D58, #34A853);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(52, 168, 83, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+        @media (max-width: 768px) {
+            .cursos-grid {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .curso-imagen {
+                max-width: 100%;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Catálogo de Cursos y Capacitaciones</h1>
+            <p>Impulsa360 - Programa de Formación</p>
+<p><strong>Fundación:</strong> Freddy Jose Castro Vega</p>    </div>
+    <div class="cursos-grid">
+<div class="curso-card">
+<div class="estado-activo">✅ ACTIVO</div>
+<div class="curso-nombre">1. Curso 2</div>
+<div class="curso-categoria">Categoria......</div>
+<div class="curso-imagen-container">
+<div class="curso-imagen-placeholder">🎓 CURSO</div>
+</div>
+<div class="curso-info">⏱️ <span class="curso-duracion">2 semanas</span></div>
+<div class="curso-info">👥 <span class="curso-cupos">50 cupos disponibles</span></div>
+<div class="curso-info">📅 <span class="curso-fechas">13/10/2025 - 27/10/2025</span></div>
+<div class="curso-descripcion">Descripcion.........</div>
+<div class="curso-requisitos">🎯 <strong>Requisitos:</strong> No aplica</div>
+<a href="form" target="_blank" class="boton-inscripcion">📝 Inscribirse en este Curso</a>
+</div>
+<div class="curso-card">
+<div class="estado-activo">✅ ACTIVO</div>
+<div class="curso-nombre">2. Maquillaje</div>
+<div class="curso-categoria">Aseo personal</div>
+<div class="curso-imagen-container">
+<div class="curso-imagen-placeholder">🎓 CURSO</div>
+</div>
+<div class="curso-info">⏱️ <span class="curso-duracion">4 semanas</span></div>
+<div class="curso-info">👥 <span class="curso-cupos">100 cupos disponibles</span></div>
+<div class="curso-info">📅 <span class="curso-fechas">14/10/2025 - 03/11/2025</span></div>
+<div class="curso-descripcion">Maquillaje</div>
+<div class="curso-requisitos">🎯 <strong>Requisitos:</strong> Ninguno</div>
+<a href="https://docs.google.com/forms/d/e/1FAIpQLScEuuFCnurpNECnr-2Q98QX9R-5IE11xu5d2qiunGYUM2HWOw/viewform?usp=header" target="_blank" class="boton-inscripcion">📝 Inscribirse en este Curso</a>
+</div>
+</div>
+<div class="footer">
+    <p>📅 Generado el:2025-10-17 | 🎓 Total cursos activos: 2        </p>
+            <p>✨ Impulsa360 - Plataforma para Fundaciones y Emprendedores Sociales</p>
+        </div>
+    </div>
+</body>
+</html>
